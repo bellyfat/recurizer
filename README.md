@@ -1,4 +1,4 @@
-# recurizer
+# Recurizer
 LLM-based recursive summary tool
 
 ### Problem
@@ -7,8 +7,12 @@ code's "context" can be spread around multiple files and one flag can drasticall
 If this flag is not returned as context from the vector db retrieval, we're out of luck.
 2. Completions/Chat are limited by the context window (4k for `gpt-3.5`, 8k/32k for `gpt-4`). Luckily,
 many codebases do not exceed this limit and tools exist for this (see [`GrePT`](https://github.com/jackbarry24/GrePT)).
-But, codebases that do exceed this context window limit tend to exceed it by a light, making chat based
+But, codebases that do exceed this context window limit tend to exceed it by a bunch, making chat based
 q and a tools useless. 
+3. Fine-tuning is the way to go - but it's intensive (qa pairs are hard to generate) and it's not
+yet feasible for low-resource projects. 
+
+**Recurizer** aims to be somewhere inbetween. 
 
 ### Proposal
 
