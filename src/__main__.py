@@ -3,6 +3,7 @@ import os
 
 from summarize import summarize_file
 
+DEST_FILE = ".summary.md"
 IGNORE_DIRS = ["__pycache__", ".git", ".venv", "venv", "node_modules"]
 IGNORE_FILES = [".summary.md"]
 
@@ -17,6 +18,7 @@ def crawl(path: str, overwrite: bool = True):
     
         root = os.path.dirname(path)
         fname = os.path.basename(path)
+        print(root, fname)
         summarize_file(root, fname, debug=True)
 
     #directory - check if its in ignore list
@@ -26,10 +28,11 @@ def crawl(path: str, overwrite: bool = True):
         if os.path.basename(path) in IGNORE_DIRS:
             return
         
-        if ".summary.md" in os.listdir(path) and not overwrite:
-            print(f"Skipping {path} because it already contains a .summary.md file")
+        if DEST_FILE in os.listdir(path) and not overwrite:
+            print(f"Skipping {path} because it already contains a {DEST_FILE} file")
             return
         
+        print("LIST", os.listdir(path))
         for subpath in os.listdir(path):
             crawl(os.path.join(path, subpath))
 
@@ -43,7 +46,7 @@ def crawl(path: str, overwrite: bool = True):
         
 def main():
     #walk the dir
-    crawl('src', overwrite=False)
+    crawl('.', overwrite=False)
 
 
 if __name__ == '__main__':
