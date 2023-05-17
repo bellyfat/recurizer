@@ -18,7 +18,7 @@ def file_prompt(fcontents: str):
     ]
 
 
-def summarize_file(root:str, fpath: str):
+def summarize_file(root:str, fpath: str, debug: bool = False):
     #given a file path, summarize the file, and append the summary to the .summary file
 
     try:
@@ -30,15 +30,18 @@ def summarize_file(root:str, fpath: str):
     with open(os.path.join(root, fpath), 'r') as f:
         text = f.read()
     
-    summary = openai.ChatCompletion.create(
-        model = "gpt-3.5-turbo",
-        messages = file_prompt(text),
-        temperature = 0.3,
-        max_tokens = 150,
-    ).choices[0]["message"]["content"]
-    full_msg = f"### Summary of {fpath}:\n{summary}\n\n"
+    if debug:
+        full_msg = f"### Summary of {fpath}\n\n"
+    else:
+        summary = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages = file_prompt(text),
+            temperature = 0.3,
+            max_tokens = 150,
+        ).choices[0]["message"]["content"]
+        full_msg = f"### Summary of {fpath}:\n{summary}\n\n"
 
     #open the file ".summary" and append the summary to the end of the file
     
-    with open(root + '.summary.md', 'a') as f:
+    with open(root + "/" + '.summary.md', 'a') as f:
         f.write(full_msg)

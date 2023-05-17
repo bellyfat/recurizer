@@ -1,5 +1,5 @@
 # Recurizer
-LLM-based recursive summary tool
+LLM-based code retrieval through recursive summarization. 
 
 ### Problem
 1. Embeddings for code kinda suck. Unlike, text where it is easy to gather specific context from 1-5 specific samples, 
